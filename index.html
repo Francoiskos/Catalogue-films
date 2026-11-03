@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta
+      name="description"
+      content="Catalogue de films interactif réalisé en HTML, CSS et JavaScript."
+    />
+
+    <title>CinéScope | Catalogue de films</title>
+
+    <link rel="stylesheet" href="css/style.css" />
+
+    <script src="js/script.js" defer></script>
+  </head>
+
+  <body>
+    <!-- ==========================================
+         01 - EN-TÊTE
+         ========================================== -->
+
+    <header class="header">
+      <nav class="navbar" aria-label="Navigation principale">
+        <a href="index.html" class="logo"> 🎬 CinéScope </a>
+
+        <div class="nav-actions">
+          <span class="nav-text"> Explorez le cinéma </span>
+
+          <!-- Bouton pour afficher les favoris -->
+          <button
+            type="button"
+            id="favorites-button"
+            class="favorites-nav-button"
+            aria-pressed="false"
+          >
+            ♡ Mes favoris
+            <span id="favorites-count">0</span>
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <!-- ==========================================
+           02 - PRÉSENTATION
+           ========================================== -->
+
+      <section class="hero">
+        <p class="hero-label">VOTRE UNIVERS CINÉMA</p>
+
+        <h1>
+          Découvrez votre prochain
+          <span>film préféré.</span>
+        </h1>
+
+        <p>
+          Explorez notre catalogue, recherchez des films et retrouvez vos
+          favoris.
+        </p>
+      </section>
+
+      <!-- ==========================================
+           03 - RECHERCHE DE FILMS
+           ========================================== -->
+
+      <section class="search-section" aria-label="Recherche de films">
+        <label for="search-input"> Rechercher un film </label>
+
+        <div class="search-box">
+          <input
+            type="search"
+            id="search-input"
+            placeholder="Ex. : Interstellar, Avatar..."
+          />
+
+          <button type="button" id="search-button">Rechercher</button>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           04 - CATALOGUE DE FILMS
+           ========================================== -->
+
+      <section class="movies-section" aria-labelledby="movies-title">
+        <!-- ==========================================
+             04.1 - TITRE ET COMPTEUR
+             ========================================== -->
+
+        <div class="section-heading">
+          <h2 id="movies-title">Les films à découvrir</h2>
+          <p id="movies-count">Notre sélection de films</p>
+        </div>
+
+        <!-- Bouton pour revenir au catalogue -->
+        <button
+          type="button"
+          id="back-to-catalog"
+          class="back-to-catalog"
+          hidden
+        >
+          ← Retour au catalogue
+        </button>
+
+        <!-- ==========================================
+             04.2 - FILTRES ET TRI
+             ========================================== -->
+
+        <div class="movies-filters">
+          <!-- FILTRE 1 : GENRE -->
+
+          <div class="filter-group">
+            <label for="filter-genre"> Genre </label>
+
+            <select id="filter-genre">
+              <option value="">Tous les genres</option>
+
+              <option value="28">Action</option>
+              <option value="12">Aventure</option>
+              <option value="16">Animation</option>
+              <option value="35">Comédie</option>
+              <option value="99">Documentaire</option>
+              <option value="18">Drame</option>
+              <option value="27">Horreur</option>
+              <option value="10749">Romance</option>
+              <option value="878">Science-fiction</option>
+              <option value="53">Thriller</option>
+            </select>
+          </div>
+
+          <!-- FILTRE 2 : ANNÉE -->
+
+          <div class="filter-group">
+            <label for="filter-year"> Année </label>
+
+            <select id="filter-year">
+              <option value="">Toutes les années</option>
+
+              <option value="2026">2026</option>
+              <option value="2025">2025</option>
+              <option value="2024">2024</option>
+              <option value="2023">2023</option>
+              <option value="2022">2022</option>
+              <option value="2021">2021</option>
+              <option value="2020">2020</option>
+            </select>
+          </div>
+
+          <!-- FILTRE 3 : TRI DES FILMS -->
+
+          <div class="filter-group">
+            <label for="filter-sort"> Trier par </label>
+
+            <select id="filter-sort">
+              <option value="popularity.desc">Popularité</option>
+
+              <option value="vote_average.desc">Meilleures notes</option>
+
+              <option value="primary_release_date.desc">
+                Date de sortie (plus récents)
+              </option>
+            </select>
+          </div>
+        </div>
+        <!-- FIN DES FILTRES -->
+
+        <!-- ==========================================
+             04.3 - GRILLE DES FILMS
+             ========================================== -->
+
+        <!--
+          Les cartes de films sont ajoutées
+          automatiquement par JavaScript.
+        -->
+
+        <div class="movies-grid" id="movies-grid"></div>
+
+        <!-- ==========================================
+             04.4 - PAGINATION DES FILMS
+             ========================================== -->
+
+        <!--
+          La pagination permettra de naviguer
+          entre les différentes pages de TMDB.
+
+          Elle est masquée au départ et sera
+          affichée automatiquement par JavaScript.
+        -->
+
+        <nav
+          class="pagination"
+          id="pagination"
+          aria-label="Navigation entre les pages"
+          hidden
+        >
+          <!-- Bouton page précédente -->
+
+          <button type="button" id="previous-page">← Précédent</button>
+
+          <!-- Numéro de page actuel -->
+
+          <span id="page-info" aria-live="polite"> Page 1 sur 1 </span>
+
+          <!-- Bouton page suivante -->
+
+          <button type="button" id="next-page">Suivant →</button>
+        </nav>
+
+        <!-- ==========================================
+             04.5 - MESSAGE SI AUCUN RÉSULTAT
+             ========================================== -->
+
+        <!--
+          IMPORTANT :
+          Cet identifiant apparaît une seule fois.
+        -->
+
+        <p id="empty-message" hidden>Aucun film trouvé pour cette recherche.</p>
+      </section>
+    </main>
+
+    <!-- ==========================================
+         05 - FENÊTRE DE DÉTAILS D'UN FILM
+         ========================================== -->
+
+    <dialog id="movie-modal" class="movie-modal" aria-labelledby="modal-title">
+      <div class="modal-content">
+        <!-- Bouton de fermeture -->
+        <button
+          type="button"
+          id="close-modal"
+          class="modal-close"
+          aria-label="Fermer les détails du film"
+        >
+          &times;
+        </button>
+
+        <div class="modal-layout">
+          <!-- Affiche du film -->
+          <div class="modal-poster">
+            <img
+              id="modal-image"
+              src="https://placehold.co/400x600/202020/D9AC52?text=Affiche+indisponible"
+              alt="Affiche du film"
+            />
+          </div>
+
+          <!-- Informations du film -->
+          <div class="modal-info">
+            <h2 id="modal-title">Titre du film</h2>
+
+            <p id="modal-date">Date de sortie</p>
+
+            <p id="modal-genres">Genres du film</p>
+
+            <p id="modal-duration">Durée du film</p>
+
+            <p id="modal-rating" class="modal-rating">★ 0 / 10</p>
+
+            <!-- Bouton pour enregistrer le film -->
+            <button
+              type="button"
+              id="modal-favorite-button"
+              class="modal-favorite-button"
+              aria-pressed="false"
+            >
+              ♡ Ajouter aux favoris
+            </button>
+
+            <h3>Synopsis</h3>
+
+            <p id="modal-overview">Chargement du synopsis...</p>
+          </div>
+        </div>
+      </div>
+    </dialog>
+
+    <!-- ==========================================
+         06 - PIED DE PAGE
+         ========================================== -->
+
+    <footer class="footer">
+      <p>© 2026 CinéScope — Projet réalisé par François</p>
+    </footer>
+  </body>
+</html>
