@@ -6,6 +6,10 @@ Elle permet de parcourir un catalogue de films, de rechercher des titres, de fil
 
 Ce projet a été réalisé dans le cadre de mon portfolio de développeur web.
 
+## 📸 Aperçu du projet
+
+![Capture d'écran de CinéScope](cinescope-accueil.png)
+
 ## 🌐 Démonstration
 
 🔗 **Site en ligne :** [Découvrir CinéScope](URL_DU_SITE)
